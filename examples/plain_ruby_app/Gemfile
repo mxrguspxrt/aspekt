@@ -1,4 +1,4 @@
-gem "aspekt"
+gem "aspekt", path: "../.."
 
 group :development do
   gem "rspec"

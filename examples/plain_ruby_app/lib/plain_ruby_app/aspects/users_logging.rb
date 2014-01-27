@@ -1,4 +1,5 @@
 module PlainRubyApp
+  include ::Aspekt
 
   before User => :save do |joinpoint|
     Logger.info("Before #{joinpoint.method_name} on #{joinpoint.instance.to_h} with #{joinpoint.arguments}")

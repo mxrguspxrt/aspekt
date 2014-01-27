@@ -1,10 +1,11 @@
 module PlainRubyApp
+  include ::Aspekt
 
   before Payment => :create do |joinpoint|
     Logger.info("Before #{joinpoint.method_name} on #{joinpoint.instance.to_h} with #{joinpoint.arguments}")
   end
 
-  after Payment => [:create: :update] do |joinpoint|
+  after Payment => [:create, :update] do |joinpoint|
     Logger.info("After #{joinpoint.method_name} on #{joinpoint.instance.to_h} with #{joinpoint.arguments} and result was #{joinpoint.return_value}")
   end
 
