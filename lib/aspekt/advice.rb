@@ -1,9 +1,10 @@
 module Aspekt
   class Advice
 
-    attr_reader :opts, :block
+    attr_reader :advice_type, :opts, :block
 
-    def initialize(opts, &block)
+    def initialize(advice_type, opts, &block)
+      @advice_type = advice_type
       @opts = opts
       @block = block
     end
@@ -23,7 +24,9 @@ module Aspekt
     end
 
     def weave
-      raise "must be defined in subclass"
+      pointcuts_array.all? do |type, method|
+        Aspekt::MethodWeaver.weave(advice_type, type, method)
+      end
     end
 
   end

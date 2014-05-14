@@ -15,7 +15,7 @@ module Aspekt
     end
 
     def proceed
-      @return_value = bound_method.call(*arguments, &@block)
+      @return_value = bound_method.call(*arguments, &block)
     end
 
   end

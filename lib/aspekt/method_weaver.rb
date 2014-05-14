@@ -1,8 +1,11 @@
 module Aspekt
   class MethodWeaver
 
-    def weave_around(type, method_name, &block)
-      joinpoint = nil
+    def self.weave(advice_type, type, method_name, &block)
+      send("weave_#{advice_type}", type, method_name, &blocks)
+    end
+
+    def self.weave_around(type, method_name, &block)
       method_orginal = type.instance_method(method_name)
 
       type.send(:define_method, method_name) do |*method_arguments, &method_block|
@@ -20,14 +23,14 @@ module Aspekt
       end
     end
 
-    def weave_before(type, method_name, &block)
+    def self.weave_before(type, method_name, &block)
       weave_around(type, method_name) do |joinpoint|
         block.call(joinpoint)
         joinpoint.proceed
       end
     end
 
-    def weave_after(type, method_name, &block)
+    def self.weave_after(type, method_name, &block)
       weave_around(type, method_name) do |joinpoint|
         joinpoint.proceed
         block.call(joinpoint)

@@ -9,6 +9,7 @@ module PlainRubyApp
     end
 
     def initialize(opts)
+      opts.each {|k,v| send("#{k}=", v) }
     end
 
     def save
